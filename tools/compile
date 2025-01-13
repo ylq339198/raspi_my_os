@@ -1,0 +1,36 @@
+all this we do not run in vboxsf,tar file has some problems(can not utime)
+(1)qemu-6.0.1
+wget https://download.qemu.org/qemu-6.0.1.tar.xz
+tar xf qemu-6.0.1.tar.xz 
+cd qemu-6.0.1
+mkdir build 
+cd build
+# 配置编译选项,要求支持aarch64以及riscv64架构,支持调试
+../configure --target-list=aarch64-softmmu,riscv64-softmmu,aarch64-linux-user,riscv64-linux-user --enable-debug
+
+make -j8
+
+(2)qemu-8.0.0
+the same with (1)
+wget https://download.qemu.org/qemu-8.0.0.tar.xz
+
+(3) gdb
+sudo apt-get install gdb-multiarch
+also can  use
+apt install python3-dev # 如果希望gdb有python3的支持(pwndbg需要),那么就需要这个包
+wget https://ftp.gnu.org/gnu/gdb/gdb-10.2.tar.xz
+tar xf gdb-10.2.tar.xz
+cd gdb-10.2
+mkdir build
+cd build
+../configure --enable-targets=all --with-python=/usr/bin/python3
+make -j$(nproc)
+make install
+# 接下来安装pwndbg
+cd~
+git clonehttps://github.com/pwndbg/pwndbg
+cd pwndbg
+./setup.sh
+在gdb的编译选项中,如果设置"--enable-targets=all",那么编译出来的gdb就会支持所有架构,也就相当于在apt安装的gdb-multiarch,或者如果配置选项"--target=<架构>",这样支持不同平台的gdb的名字会不一样,比如打开支持risc-v平台的gdb,就需要输入riscv64-unknown-elf-gdb,怪麻烦的,所以让gdb默认支持所有平台就好
+
+

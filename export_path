@@ -1,0 +1,2 @@
+export PATH=/home/ylq/my_os/qemu-6.0.1/build:$PATH
+export PATH=/home/ylq/my_os/qemu-8.0.0/build:$PATH
