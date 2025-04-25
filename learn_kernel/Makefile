@@ -40,10 +40,10 @@ all : rpios.bin
 clean :
 	rm -rf $(BUILD_DIR) *.img
 run :
-	qemu-system-aarch64 -machine raspi3 -nographic -kernel rpios.img -serial mon:stdio
+	qemu-system-aarch64 -machine raspi3b -nographic -kernel rpios.img -serial mon:stdio
 
 debug : 
-	qemu-system-aarch64 -machine raspi3 -nographic -kernel rpios.img  -S -s
+	qemu-system-aarch64 -machine raspi3b -nographic -kernel rpios.img  -S -s
 
 $(BUILD_DIR)/%_c.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
@@ -66,4 +66,5 @@ DEP_FILES = $(OBJ_FILES:%.o=%.d)
 
 rpios.bin: $(SRC_DIR)/linker.ld $(OBJ_FILES)
 	$(ARMGNU)-ld -T $(SRC_DIR)/linker.ld -o $(BUILD_DIR)/rpios.elf  $(OBJ_FILES)
+	$(ARMGNU)-objdump -S $(BUILD_DIR)/rpios.elf > $(BUILD_DIR)/rpios.txt
 	$(ARMGNU)-objcopy $(BUILD_DIR)/rpios.elf -O binary rpios.img

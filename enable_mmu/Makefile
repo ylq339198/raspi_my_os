@@ -38,7 +38,7 @@ $(KERNEL_ELF): $(LINKER_SCRIPT) $(OBJS)
 $(KERNEL_IMG): $(KERNEL_ELF)
 	$(OBJCOPY) -O binary $< $@
 
-QEMU := qemu-system-aarch64 -M raspi3 -nographic -serial null -chardev stdio,id=uart1 -serial chardev:uart1 -monitor none
+QEMU := qemu-system-aarch64 -M raspi3b -nographic -serial null -chardev stdio,id=uart1 -serial chardev:uart1 -monitor none
 
 qemu: $(KERNEL_IMG) 
 	$(QEMU) -kernel $<
