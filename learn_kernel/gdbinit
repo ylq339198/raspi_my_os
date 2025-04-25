@@ -1,0 +1,5 @@
+set architecture aarch64
+file build/rpios.elf
+target remote localhost:1234
+set disassemble-next-line on
+
