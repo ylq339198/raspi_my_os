@@ -50,6 +50,7 @@ el1_entry:
 
 	bl	__create_idmap
 	adrp	x0, idmap_dir
+	//adr     x0, kpgd // 取得页表地址
 	msr	ttbr0_el1, x0
 
 	bl 	__create_page_tables
