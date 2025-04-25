@@ -120,8 +120,11 @@
 #define TCR_TG0_4K (0 << 14)
 #define TCR_SH0_INNER (0b11 << 12)
 #define TCR_ORGN0_IRGN0_WRITEBACK_WRITEALLOC ((0b01 << 10) | (0b01 << 8))
+#define TCR_T0SZ			(64 - 48) //用户态虚拟地址空间48位
+#define TCR_T1SZ			((64 - 48) << 16) //内核态虚拟地址空间48位
+
 #define TCR_VALUE                                                        \
-    (TCR_IPS |                                                           \
+    (TCR_IPS |  TCR_T0SZ |  TCR_T1SZ |                                   \
      TCR_TG1_4K | TCR_SH1_INNER | TCR_ORGN1_IRGN1_WRITEBACK_WRITEALLOC | \
      TCR_TG0_4K | TCR_SH0_INNER | TCR_ORGN0_IRGN0_WRITEBACK_WRITEALLOC)
 
